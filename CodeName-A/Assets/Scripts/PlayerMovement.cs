@@ -14,9 +14,13 @@ public class PlayerMovement: MonoBehaviour
     public LayerMask isGroundLayer;
     public Transform groundCheck;
     public float groundCheckRadius;
+
+    public GameObject[] phasedObjects;
+    
     // Start is called before the first frame update
     void Start()
     {
+        phasedObjects = new GameObject[0];
         anim = GetComponent<Animator>();
         myRigidBody = GetComponent<Rigidbody2D>();
 
@@ -51,7 +55,15 @@ public class PlayerMovement: MonoBehaviour
             anim.SetBool("isGrounded", false);
         }
 
-        
+        // Ability to see hiden gameObjects
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            for (int i = 0; i < phasedObjects.Length; i++)
+            {
+                GameObject gameObjects = phasedObjects[i];
+                gameObject.activeInHierarchy.Equals(true);
+            }
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
