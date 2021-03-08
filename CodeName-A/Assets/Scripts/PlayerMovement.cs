@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement: MonoBehaviour
 {
+    public Animator anim;
     public float speed;
     public int jumpForce;
     Rigidbody2D myRigidBody;
@@ -16,7 +17,9 @@ public class PlayerMovement: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         myRigidBody = GetComponent<Rigidbody2D>();
+
         if (jumpForce <= 0)
         {
             jumpForce = 5;
@@ -41,8 +44,14 @@ public class PlayerMovement: MonoBehaviour
             myRigidBody.velocity = Vector2.zero;
 
             myRigidBody.AddForce(Vector2.up * jumpForce);
+            anim.SetTrigger("isJumping");
             Debug.Log("Jump");
         }
+
+        anim.ResetTrigger("isJumping");
+
+        
+        
     }
 }
 
