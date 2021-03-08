@@ -3184,10 +3184,8 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 668736202}
   groundCheckRadius: 0.5
-  phasedObjects:
-  - {fileID: 2109268574}
-  - {fileID: 1967181925}
-  - {fileID: 0}
+  phasedObjects: []
+  phasedObjs: []
   platform1: {fileID: 2109268574}
   platform2: {fileID: 1967181925}
   phased: 0
@@ -3520,11 +3518,11 @@ GameObject:
   - component: {fileID: 1967181928}
   m_Layer: 8
   m_Name: Square (1)
-  m_TagString: Untagged
+  m_TagString: Phased
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1967181926
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3734,11 +3732,11 @@ GameObject:
   - component: {fileID: 2109268577}
   m_Layer: 8
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Phased
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &2109268575
 SpriteRenderer:
   m_ObjectHideFlags: 0

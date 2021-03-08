@@ -16,6 +16,7 @@ public class PlayerMovement: MonoBehaviour
     public float groundCheckRadius;
 
     public GameObject[] phasedObjects;
+    public GameObject[] phasedObjs;
 
     // Testing with GameObjects
     public GameObject platform1;
@@ -29,7 +30,17 @@ public class PlayerMovement: MonoBehaviour
         phased = false;
 
         //backgroundRenderer = GetComponent<SpriteRenderer>();
-        phasedObjects = new GameObject[0];
+        //phasedObjects = new GameObject[10];
+        
+        //Debug.Log(phasedObjects.Length);
+        //phasedObjs = new GameObject[100];
+        phasedObjs = GameObject.FindGameObjectsWithTag("Phased");
+        for (int i = 0; i < phasedObjs.Length; i++)
+        {
+            phasedObjs[i].SetActive(false);
+        }
+        //phasedObjects = new GameObject[tempArray.Length];
+        //phasedObjects.Length
         anim = GetComponent<Animator>();
         myRigidBody = GetComponent<Rigidbody2D>();
 
@@ -70,8 +81,14 @@ public class PlayerMovement: MonoBehaviour
             backgroundRenderer.color =  new Color(0.01960784f, 0.07723299f, 0.1803922f, 1f);
          
             phased = true;
-            platform1.SetActive(true);
-            platform2.SetActive(true);
+            Debug.Log(phasedObjs.Length);
+            for(int i = 0; i < phasedObjs.Length; i++)
+            {
+                Debug.Log("Hello");
+                phasedObjs[i].SetActive(true);
+            }
+            //platform1.SetActive(true);
+            //platform2.SetActive(true);
             //for (int i = 0; i < phasedObjects.Length; i++)
             //{
             //    GameObject gameObjects = phasedObjects[i];
@@ -82,8 +99,12 @@ public class PlayerMovement: MonoBehaviour
         {
             backgroundRenderer.color = new Color(0.120448f, 0.01944643f, 0.1792453f, 1f);
             phased = false;
-            platform1.SetActive(false);
-            platform2.SetActive(false);
+            //platform1.SetActive(false);
+            //platform2.SetActive(false);
+            for (int i = 0; i < phasedObjs.Length; i++)
+            {
+                phasedObjs[i].SetActive(false);
+            }
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
