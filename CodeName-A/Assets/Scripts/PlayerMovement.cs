@@ -16,10 +16,19 @@ public class PlayerMovement: MonoBehaviour
     public float groundCheckRadius;
 
     public GameObject[] phasedObjects;
-    
+
+    // Testing with GameObjects
+    public GameObject platform1;
+    public GameObject platform2;
+    public bool phased;
+    public SpriteRenderer backgroundRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
+        phased = false;
+
+        //backgroundRenderer = GetComponent<SpriteRenderer>();
         phasedObjects = new GameObject[0];
         anim = GetComponent<Animator>();
         myRigidBody = GetComponent<Rigidbody2D>();
@@ -56,13 +65,25 @@ public class PlayerMovement: MonoBehaviour
         }
 
         // Ability to see hiden gameObjects
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !phased)
         {
-            for (int i = 0; i < phasedObjects.Length; i++)
-            {
-                GameObject gameObjects = phasedObjects[i];
-                gameObject.activeInHierarchy.Equals(true);
-            }
+            backgroundRenderer.color =  new Color(0.01960784f, 0.07723299f, 0.1803922f, 1f);
+         
+            phased = true;
+            platform1.SetActive(true);
+            platform2.SetActive(true);
+            //for (int i = 0; i < phasedObjects.Length; i++)
+            //{
+            //    GameObject gameObjects = phasedObjects[i];
+            //    gameObject.activeInHierarchy.Equals(true);
+            //}
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) && phased)
+        {
+            backgroundRenderer.color = new Color(0.120448f, 0.01944643f, 0.1792453f, 1f);
+            phased = false;
+            platform1.SetActive(false);
+            platform2.SetActive(false);
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
