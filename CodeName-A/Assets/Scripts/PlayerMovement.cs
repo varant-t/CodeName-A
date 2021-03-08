@@ -29,6 +29,8 @@ public class PlayerMovement: MonoBehaviour
             speed = 5f;
         }
         jump = new Vector2(0.0f, 2.0f);
+
+        anim.SetBool("isGrounded", true);
     }
 
     // Update is called once per frame
@@ -39,19 +41,48 @@ public class PlayerMovement: MonoBehaviour
         myRigidBody.velocity = new Vector2(moveHorizontal * speed, myRigidBody.velocity.y);
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
+
+        if (isGrounded)
+        {
+            anim.SetBool("isGrounded", true);
+        }
+        else
+        {
+            anim.SetBool("isGrounded", false);
+        }
+
+        
+
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            //anim.SetTrigger("isJumping");
+            //anim.SetBool("isGrounded", false);
+            
             myRigidBody.velocity = Vector2.zero;
 
             myRigidBody.AddForce(Vector2.up * jumpForce);
-            anim.SetTrigger("isJumping");
+
+
             Debug.Log("Jump");
+
+           // anim.ResetTrigger("isJumping");
         }
 
-        anim.ResetTrigger("isJumping");
+      
+        // Swap direction of sprite depending on walk direction
+        if (moveHorizontal > 0)
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        else if (moveHorizontal < 0)
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
-        
-        
+        //Animation Updates and Trigger
+        if (Mathf.Abs(moveHorizontal) > Mathf.Epsilon)
+            anim.SetTrigger("isMoving");
+
+        else if (Mathf.Abs(moveHorizontal) < Mathf.Epsilon)
+            anim.SetTrigger("isIdle");
+
+
     }
 }
 

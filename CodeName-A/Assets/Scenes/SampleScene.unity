@@ -3120,7 +3120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 1702641318}
   speed: 5
-  jumpForce: 5
+  jumpForce: 300
   jump: {x: 0, y: 0}
   isGrounded: 0
   isGroundLayer:
