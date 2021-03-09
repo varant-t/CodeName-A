@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 101236409}
   m_Layer: 8
   m_Name: EnvironmentTiles_1 (39)
-  m_TagString: Phased
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 137321321}
   m_Layer: 8
   m_Name: EnvironmentTiles_1 (37)
-  m_TagString: Phased
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3946,7 +3946,7 @@ GameObject:
   - component: {fileID: 1795531907}
   m_Layer: 8
   m_Name: EnvironmentTiles_1 (40)
-  m_TagString: Phased
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4261,7 +4261,7 @@ GameObject:
   - component: {fileID: 1919322314}
   m_Layer: 8
   m_Name: EnvironmentTiles_1 (36)
-  m_TagString: Phased
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4576,7 +4576,7 @@ GameObject:
   - component: {fileID: 2070571247}
   m_Layer: 8
   m_Name: EnvironmentTiles_1 (38)
-  m_TagString: Phased
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
