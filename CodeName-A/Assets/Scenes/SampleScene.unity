@@ -2367,6 +2367,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 50512961935941442, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50512961935941442, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 61252362154681264, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: m_Offset.x
       value: 0.02994442
@@ -3952,6 +3960,9 @@ MonoBehaviour:
   phasedObjs: []
   phased: 0
   backgroundRenderer: {fileID: 776138349}
+  dashSpeed: 50
+  dashTime: 0
+  startDashTime: 0.1
 --- !u!1 &1761746689
 GameObject:
   m_ObjectHideFlags: 0

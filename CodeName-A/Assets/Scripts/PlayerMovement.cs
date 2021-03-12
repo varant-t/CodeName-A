@@ -21,9 +21,20 @@ public class PlayerMovement: MonoBehaviour
     public bool phased;
     public SpriteRenderer backgroundRenderer;
 
+    //Dashing Mechanics
+    public float dashSpeed;
+    public float dashTime;
+    public float startDashTime;
+    private int direction;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
+        //Initialize Dashing
+        dashTime = startDashTime;
+        
+
         // Initialize that the starting world isnt not phased, and add all objects with Phased tag into array
         phased = false;
         phasedObjs = GameObject.FindGameObjectsWithTag("Phased");
@@ -51,7 +62,10 @@ public class PlayerMovement: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
+       
+
+
+            float moveHorizontal = Input.GetAxis("Horizontal");
 
         myRigidBody.velocity = new Vector2(moveHorizontal * speed, myRigidBody.velocity.y);
 
@@ -110,6 +124,44 @@ public class PlayerMovement: MonoBehaviour
 
         else if (Mathf.Abs(moveHorizontal) < Mathf.Epsilon)
             anim.SetTrigger("isIdle");
+
+
+        // Dashing Checks
+        bool isShiftKeyDown = Input.GetKey(KeyCode.LeftShift);
+
+        if (direction == 0)
+        {
+            if (Input.GetKeyDown(KeyCode.A) && isShiftKeyDown)
+            {
+                direction = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.D) && isShiftKeyDown)
+            {
+                direction = 2;
+            }
+        }
+        else
+        {
+            if (dashTime <= 0)
+            {
+                direction = 0;
+                dashTime = startDashTime;
+                myRigidBody.velocity = Vector2.zero;
+            }
+            else
+            {
+                dashTime -= Time.deltaTime;
+
+                if (direction == 1)
+                {
+                    myRigidBody.velocity = Vector2.left * dashSpeed;
+                }
+                else if (direction == 2)
+                {
+                    myRigidBody.velocity = Vector2.right * dashSpeed;
+                }       
+            }
+        }
 
 
     }
