@@ -131,11 +131,11 @@ public class PlayerMovement: MonoBehaviour
 
         if (direction == 0)
         {
-            if (Input.GetKeyDown(KeyCode.A) && isShiftKeyDown)
+            if (transform.localScale.x == 1 && isShiftKeyDown)
             {
                 direction = 1;
             }
-            else if (Input.GetKeyDown(KeyCode.D) && isShiftKeyDown)
+            else if (transform.localScale.x == -1 && isShiftKeyDown)
             {
                 direction = 2;
             }
