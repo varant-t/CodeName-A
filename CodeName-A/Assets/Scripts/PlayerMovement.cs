@@ -26,6 +26,10 @@ public class PlayerMovement: MonoBehaviour
     public float dashTime;
     public float startDashTime;
     private int direction;
+    //Dashing Cooldown
+    private bool canDash = true;
+    private float dashCooldown = 2f;
+    public float timeSinceLastDash = 0;
     
     
     // Start is called before the first frame update
@@ -126,18 +130,31 @@ public class PlayerMovement: MonoBehaviour
             anim.SetTrigger("isIdle");
 
 
+        
+    }
+    private void FixedUpdate()
+    {
         // Dashing Checks
+        timeSinceLastDash += Time.deltaTime;
+        if (canDash == false && timeSinceLastDash >= dashCooldown)
+        {
+            canDash = true;
+        }
         bool isShiftKeyDown = Input.GetKey(KeyCode.LeftShift);
 
         if (direction == 0)
         {
-            if (transform.localScale.x == 1 && isShiftKeyDown)
+            if (transform.localScale.x == 1 && isShiftKeyDown && canDash)
             {
                 direction = 1;
+                canDash = false;
+                timeSinceLastDash = 0;
             }
-            else if (transform.localScale.x == -1 && isShiftKeyDown)
+            else if (transform.localScale.x == -1 && isShiftKeyDown && canDash)
             {
                 direction = 2;
+                canDash = false;
+                timeSinceLastDash = 0;
             }
         }
         else
@@ -151,19 +168,18 @@ public class PlayerMovement: MonoBehaviour
             else
             {
                 dashTime -= Time.deltaTime;
-
                 if (direction == 1)
                 {
                     myRigidBody.velocity = Vector2.left * dashSpeed;
+                    timeSinceLastDash = 0;
                 }
                 else if (direction == 2)
                 {
                     myRigidBody.velocity = Vector2.right * dashSpeed;
-                }       
+                    timeSinceLastDash = 0;
+                }
             }
         }
-
-
     }
 }
 
