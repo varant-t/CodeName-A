@@ -14,39 +14,33 @@ public class EnemyAI : MonoBehaviour
     public GameObject patrolNode1;
     public GameObject patrolNode2;
 
+    private GameObject playerTarget;
+    private bool canAttack = true;
+    private float attackCooldown = 1;
+    private float timeSinceLastAttack;
+
     // Start is called before the first frame update
     void Start()
     {
         enemyRB = GetComponent<Rigidbody2D>();
         enemySprite = GetComponent<SpriteRenderer>();
         enemyAnim = GetComponent<Animator>();
+        playerTarget = GameObject.Find("Player");
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        int moveHorizontal = 0;
-        OutsidePatrolBounds();
-        if (moving)
+        if(Vector2.Distance(transform.position, playerTarget.transform.position) < 8)
         {
-            enemyAnim.SetInteger("AnimState", 2);
-            if (goingLeft)
-            {
-                moveHorizontal = -1;
-                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            }
-            else
-            {
-                moveHorizontal = 1;
-                transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-            }
+            chase();
         }
         else
         {
-            enemyAnim.SetInteger("AnimState", 0);
+            OutsidePatrolBounds();
+            patrol();
         }
-       
-        enemyRB.velocity = new Vector2(moveHorizontal * speed, enemyRB.velocity.y);
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -78,5 +72,68 @@ public class EnemyAI : MonoBehaviour
             goingLeft = false;
             transform.localScale = new Vector3(-transform.localScale.x, 1.0f, 1.0f);
         }
+    }
+    private void patrol()
+    {
+        int moveHorizontal = 0;
+        if (moving)
+        {
+            enemyAnim.SetInteger("AnimState", 2);
+            if (goingLeft)
+            {
+                moveHorizontal = -1;
+                turnLeft();
+            }
+            else
+            {
+                moveHorizontal = 1;
+                turnRight();
+            }
+        }
+        else
+        {
+            enemyAnim.SetInteger("AnimState", 0);
+        }
+
+        enemyRB.velocity = new Vector2(moveHorizontal * speed, enemyRB.velocity.y);
+    }
+    private void chase()
+    {
+        int moveHorizontal = 0;
+        timeSinceLastAttack += Time.deltaTime;
+        enemyAnim.SetInteger("AnimState", 2);
+        if (Vector2.Distance(transform.position, playerTarget.transform.position) > 1)
+        {
+            if (transform.position.x > playerTarget.transform.position.x)
+            {
+                moveHorizontal = -1;
+                turnLeft();
+            }
+            else
+            {
+                moveHorizontal = 1;
+                turnRight();
+            }
+        }
+        else
+        {
+            enemyAnim.SetInteger("AnimState", 0);
+            if (timeSinceLastAttack >= attackCooldown)
+            {
+                enemyAnim.SetTrigger("Attack");
+                timeSinceLastAttack = 0;
+            }
+            
+        }
+        
+        enemyRB.velocity = new Vector2(moveHorizontal * speed, enemyRB.velocity.y);
+    }
+    private void turnLeft()
+    {
+        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+    }
+    private void turnRight()
+    {
+        transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
     }
 }
