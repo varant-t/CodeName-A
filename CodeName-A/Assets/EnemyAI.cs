@@ -19,6 +19,10 @@ public class EnemyAI : MonoBehaviour
     private float attackCooldown = 1;
     private float timeSinceLastAttack;
 
+    // AI Stats
+    public int maxHealth = 10;
+    int currentHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +30,8 @@ public class EnemyAI : MonoBehaviour
         enemySprite = GetComponent<SpriteRenderer>();
         enemyAnim = GetComponent<Animator>();
         playerTarget = GameObject.Find("Player");
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -135,5 +141,29 @@ public class EnemyAI : MonoBehaviour
     private void turnRight()
     {
         transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        // play hurt anim
+        enemyAnim.SetTrigger("Hurt");
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        // Die Anim
+        enemyAnim.SetBool("isDead", true);
+
+        // Disable the enemy (disables the script) 
+        GetComponent<Collider2D>().enabled = false;
+        this.enabled = false;
+       
     }
 }

@@ -30,6 +30,14 @@ public class PlayerMovement: MonoBehaviour
     private bool canDash = true;
     private float dashCooldown = 2f;
     public float timeSinceLastDash = 0;
+
+    //Attacking Var
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayers;
+    public int attackDamage = 2;
+    public float attackRate = 2f;
+    private float nextAttackTime = 0;
     
     
     // Start is called before the first frame update
@@ -66,7 +74,15 @@ public class PlayerMovement: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if(Time.time >= nextAttackTime)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Attack();
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
+        }
+      
 
 
             float moveHorizontal = Input.GetAxis("Horizontal");
@@ -180,6 +196,29 @@ public class PlayerMovement: MonoBehaviour
                 }
             }
         }
+    }
+
+    void Attack()
+    {
+        // Play animation
+        anim.SetTrigger("isAttacking");
+
+        //  Deteck enemies in range
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        //  Apply damage
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<EnemyAI>().TakeDamage(attackDamage);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
 
