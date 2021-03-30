@@ -7,6 +7,8 @@ TagManager:
   - AI
   - Phased
   - PatrolNode
+  - LeftJumpNode
+  - RightJumpNode
   layers:
   - Default
   - TransparentFX

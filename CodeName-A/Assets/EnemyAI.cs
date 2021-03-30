@@ -58,6 +58,19 @@ public class EnemyAI : MonoBehaviour
 
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("LeftJumpNode") && transform.localScale.x == 1)
+        {
+            Debug.Log("JumpLeft");
+            Jump();
+        }
+        else if(collision.gameObject.CompareTag("RightJumpNode") && transform.localScale.x == -1)
+        {
+            Debug.Log("JumpRight");
+            Jump();
+        }
+    }
     private void ContinuePatrol()
     {
         constantDirection = -constantDirection;
@@ -142,7 +155,10 @@ public class EnemyAI : MonoBehaviour
     {
         transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
     }
-
+    private void Jump()
+    {
+        enemyRB.AddForce(Vector2.up * 350);
+    }
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
