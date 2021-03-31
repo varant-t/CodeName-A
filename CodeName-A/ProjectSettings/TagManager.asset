@@ -9,6 +9,7 @@ TagManager:
   - PatrolNode
   - LeftJumpNode
   - RightJumpNode
+  - ThrowingWeapon
   layers:
   - Default
   - TransparentFX

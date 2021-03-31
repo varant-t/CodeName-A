@@ -38,8 +38,16 @@ public class PlayerMovement: MonoBehaviour
     public int attackDamage = 2;
     public float attackRate = 2f;
     private float nextAttackTime = 0;
-    
-    
+
+    //Throwing vars
+    public Transform spawnPoint;
+    public float nextThrowingTime = 0f;
+    public float throwingRate = 1f;
+    public GameObject throwingWeapon;
+    public float throwingForce = 30f;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +88,20 @@ public class PlayerMovement: MonoBehaviour
             {
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
+            }
+        }
+
+        if(Time.time >= nextThrowingTime)
+        {
+            if(Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                GameObject thrownWeapon = Instantiate(throwingWeapon, spawnPoint.position, spawnPoint.rotation);
+                thrownWeapon.GetComponent<Rigidbody2D>().velocity = transform.right * speed;
+
+                nextThrowingTime = Time.time + 1f / throwingRate;
+
+                // Needs to be fixed, more distance to cover 
+
             }
         }
       
@@ -213,6 +235,8 @@ public class PlayerMovement: MonoBehaviour
             enemy.GetComponent<EnemyAI>().TakeDamage(attackDamage);
         }
     }
+
+   
 
     private void OnDrawGizmosSelected()
     {
